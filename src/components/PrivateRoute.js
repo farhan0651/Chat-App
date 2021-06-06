@@ -1,8 +1,8 @@
 /* eslint-disable arrow-body-style */
-import React, { Children } from 'react'
+import React from 'react'
 import { Redirect,Route} from 'react-router';
 
-const PrivateRoute = ({chldren, ...routeProps}) => {
+const PrivateRoute = ({children, ...routeProps}) => {
 
     const Profile=false;
 
@@ -12,7 +12,7 @@ const PrivateRoute = ({chldren, ...routeProps}) => {
 
     return (
         <Route {...routeProps}>
-            {Children}
+            {children}
         </Route>
     )
 }
