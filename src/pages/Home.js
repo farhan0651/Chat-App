@@ -6,7 +6,6 @@ import Sidebar from '../components/Sidebar'
 const Home = () => {
     return (
         <Grid fluid className="h-100">
-            {console.log("Ye homePage hai")}
             <Row>
                 <Col xs={24} md={8}>
                     <Sidebar />
