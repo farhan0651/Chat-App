@@ -4,6 +4,7 @@ import { Alert, Button, Modal } from 'rsuite'
 import AvatarEditor from 'react-avatar-editor'
 import {useModalState} from '../../misc/customHooks'
 import { database, storage } from '../../misc/firebase'
+import ProfileAvatar from './ProfileAvatar'
 import { useProfile } from '../../context/ProfileContext';
 
 const fileInputTypes=".png, .jpeg, .jpg"
@@ -11,7 +12,6 @@ const acceptedFileTypes=['image/png','image/jpeg','image/pjpeg']
 const isValid=(file)=>acceptedFileTypes.includes(file.type);
 
 const AvatarUploadBtn = () => {
-
     // eslint-disable-next-line no-unused-vars
     const [img,setImg]=useState(null)
     const {isOpen,open,close}=useModalState();
@@ -71,6 +71,7 @@ const AvatarUploadBtn = () => {
 
     return (
         <div className='mt-3 text-center'>
+            <ProfileAvatar circle src={profile.avatar} name={profile.name} className='width-200 height-200 img-fullsize font-huge' />
             <label htmlFor='Avatar' className='d-block cursor-pointer padded'>
                 Select Avatar
                 <input id='Avatar' type='file' className='d-none' accept={fileInputTypes} onChange={onFileInputChange} />
