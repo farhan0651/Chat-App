@@ -1,12 +1,31 @@
 /* eslint-disable arrow-body-style */
-import React from 'react'
+import React,{memo} from 'react'
+import { Link } from 'react-router-dom'
+import { Icon,ButtonToolbar } from 'rsuite'
+import { useMediaQuery } from '../../../misc/customHooks'
+import { useCurrentRoom } from '../../../context/currentRoomContext'
+import RoomInfoBtn from './RoomInfoBtn'
 
-const index = () => {
+const Top = () => {
+    const name=useCurrentRoom(v=>v.name)
+    const isMobile=useMediaQuery('(max-width:992px)')
+
     return (
         <div>
-            Top
+            <div className='d-flex justify-content-between align-items-center'>
+             <h4>
+                 <Icon componentClass={Link} to='/' icon='arrow-circle-left' size='2x' 
+                 className={isMobile ? 'd-inline-block p-0 mr-2 text-blue link-unstyled' : 'd-none'} />
+                 <spann className="text-disappear">{name}</spann>
+                 </h4>
+                 <ButtonToolbar className='ws-nowrap'>todo</ButtonToolbar>
+            </div>
+            <div className='d-flex justify-content-between align-items-center'>
+            <span>todo</span>
+            <RoomInfoBtn />
+            </div>
         </div>
     )
 }
 
-export default index
+export default memo(Top)

@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import React from 'react'
 
-const index = () => {
+const Messages = () => {
     return (
         <div>
             Messages
@@ -9,4 +9,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Messages
