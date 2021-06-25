@@ -41,7 +41,6 @@ const Signin = () => {
                         <h2>Welcome to Chat App</h2>
                         <p>Progressive chat platform for new developers
                         </p>
-                        {console.log("Ye signin page hai")}
                         </div>
                         <div className='mt-3'>
                             <Button block  color='blue' onClick={onFacebookSignIn}>
