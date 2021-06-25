@@ -2,6 +2,7 @@
 import React from 'react'
 import TimeAgo from 'timeago-react'
 import { Button } from 'rsuite'
+import IconBtnControl from './IconBtnControl'
 import ProfileInfoBtnModal from './ProfileInfoBtnModal'
 import PresenceDot from '../../PresenceDot'
 import ProfileAvatar from '../../Dashboard/ProfileAvatar'
@@ -36,6 +37,15 @@ const MessageItems = ({ message, handleAdmin }) => {
                     }
                 </ProfileInfoBtnModal>
                 <TimeAgo datetime={createdAt} className='font-normal text-black-45 ml-2' />
+                <IconBtnControl
+                    {...(true ? {color:'red'}:{})}
+                    isVisible
+                    iconName='heart'
+                    tooltip='Like this message'
+                    onClick={()=>{}}
+                    badgeContent={5}
+
+                />
             </div>
 
             <div>

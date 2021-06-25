@@ -9,6 +9,7 @@ import {tranformToArrayWithId} from '../../../misc/helpers'
 const Messages = () => {
     const {chatId}=useParams()
     const [messages,setMessage]=useState(null)
+    console.log(messages)
     const chatIsEmpty= messages && messages.length===0
     const canShowMessages= messages && messages.length>0
 
