@@ -3,13 +3,12 @@ import React from 'react';
 import { Badge, Icon, IconButton, Tooltip, Whisper } from 'rsuite';
 
 
-const IconBtnControl = ({isVisible,iconName,tooltip,badgeContent,onClick,...props}) => {
-
-    
-  const ContionalBadge = ({ condition, children }) => {
+const ContionalBadge = ({ condition, children }) => {
     return condition ? <Badge content={condition}>{children}</Badge> : children;
   };
 
+
+const IconBtnControl = ({isVisible,iconName,tooltip,badgeContent,onClick,...props}) => {
 
   return (
     <div className="ml-2" style={{ visibility: isVisible ? 'visible' : 'hidden' }} >

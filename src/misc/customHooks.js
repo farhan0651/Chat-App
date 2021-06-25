@@ -20,8 +20,8 @@ export const useMediaQuery = query => {
       setMatches(queryList.matches);
   
       const listener = evt => setMatches(evt.matches);
-  
       queryList.addListener(listener);
+      // queryList.addEventListener(listener);
       return () => queryList.removeListener(listener);
     }, [query]);
   
