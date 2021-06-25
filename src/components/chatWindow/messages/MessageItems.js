@@ -10,7 +10,7 @@ import { useCurrentRoom } from '../../../context/currentRoomContext'
 import { auth } from '../../../misc/firebase'
 import { useHover, useMediaQuery } from '../../../misc/customHooks'
 
-const MessageItems = ({ message, handleAdmin,handleLike }) => {
+const MessageItems = ({ message, handleAdmin,handleLike,handleDelete }) => {
 
     const { author, createdAt, text,likeCount,likes } = message
 
@@ -49,6 +49,15 @@ const MessageItems = ({ message, handleAdmin,handleLike }) => {
                     badgeContent={likeCount}
 
                 />
+                {isAuthor && (
+                <IconBtnControl
+                    isVisible={canShowIcons}
+                    iconName='close'
+                    tooltip='Delete this message'
+                    onClick={()=>handleDelete(message.id)}
+    
+                    />
+                )}
             </div>
 
             <div>
