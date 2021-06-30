@@ -25,7 +25,7 @@ const Bottom = () => {
     const [input,setInput]=useState('');
     const {profile}= useProfile()
     const {chatId}=useParams()
-    const [isLoading,seIsLoading]=useState(false)
+    const [isLoading,setIsLoading]=useState(false)
 
     const onInputChange=useCallback((value)=>{
         setInput(value)
@@ -45,14 +45,14 @@ const Bottom = () => {
             msgId:messageId
         }
 
-        seIsLoading(true)
+        setIsLoading(true)
         try {
             await database.ref().update(updates) 
             setInput('')
-            seIsLoading(false)
+            setIsLoading(false)
             Alert.success("Message Sent Succesfully",4000)
         } catch (error) {
-            seIsLoading(false)
+            setIsLoading(false)
             Alert.error(error.message,4000)
         }
     }
@@ -64,10 +64,34 @@ const Bottom = () => {
         }
     }
 
+    const afterUpload=useCallback(async (files)=>{
+        setIsLoading(true)
+        const updates={}
+        files.forEach(file=>{
+            const msgData=assembledMessage(profile,chatId)
+            msgData.file=file
+            const messageId=database.ref('messages').push().key;
+            updates[`/messages/${messageId}`]=msgData
+        })
+        const lastMsgId=Object.keys(updates).pop()
+        updates[`/rooms/${chatId}/lastMessage`]={
+            ...updates[lastMsgId],
+            msgId:lastMsgId
+        }
+        try {
+            await database.ref().update(updates) 
+            setIsLoading(false)
+            Alert.success("Message Sent Succesfully",4000)
+        } catch (error) {
+            setIsLoading(false)
+            Alert.error(error.message,4000)
+        }
+    },[chatId,profile])
+
     return (
         <div>
             <InputGroup>
-            <AttachmentBtnModal/>
+            <AttachmentBtnModal afterUpload={afterUpload} />
             <Input placeholder="Write your message here..." value={input} onChange={onInputChange} onKeyDown={onKeyDown} />
             <InputGroup.Button color='blue' appearance='primary' onClick={onSendClick} disabled={isLoading} >
             <Icon icon='send' />

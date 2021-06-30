@@ -6,13 +6,24 @@ import IconBtnControl from './IconBtnControl'
 import ProfileInfoBtnModal from './ProfileInfoBtnModal'
 import PresenceDot from '../../PresenceDot'
 import ProfileAvatar from '../../Dashboard/ProfileAvatar'
+import ImageBtnModal from './ImageBtnModal'
 import { useCurrentRoom } from '../../../context/currentRoomContext'
 import { auth } from '../../../misc/firebase'
 import { useHover, useMediaQuery } from '../../../misc/customHooks'
 
+const renderFileMessage=(file)=>{
+    if(file.contentType.includes('image')){
+        return <div className='height-220'>
+            <ImageBtnModal src={file.url} fileName={file.name} />
+        </div>
+    }
+
+    return <a href={file.url}>Download {file.name}</a>
+}
+
 const MessageItems = ({ message, handleAdmin,handleLike,handleDelete }) => {
 
-    const { author, createdAt, text,likeCount,likes } = message
+    const { author, createdAt, text,file,likeCount,likes } = message
 
     const isAdmin = useCurrentRoom(v => v.isAdmin)
     const admins = useCurrentRoom(v => v.admins)
@@ -61,7 +72,8 @@ const MessageItems = ({ message, handleAdmin,handleLike,handleDelete }) => {
             </div>
 
             <div>
-                <span className='word-bread-all'>{text}</span>
+            {text && <span className='word-bread-all'>{text}</span>}
+            {file && renderFileMessage(file)}
             </div>
         </li>
     )
