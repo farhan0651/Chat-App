@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 import { Alert } from 'rsuite'
 import MessageItems from './MessageItems'
 import { auth, database, storage } from '../../../misc/firebase'
-import {tranformToArrayWithId} from '../../../misc/helpers'
+import {groupBy, tranformToArrayWithId} from '../../../misc/helpers'
 
 const Messages = () => {
     const {chatId}=useParams()
@@ -107,10 +107,26 @@ const Messages = () => {
 
     },[chatId,messages])
 
+    const renderMessages=()=>{
+        const groups=groupBy(messages,(item)=>new Date(item.createdAt).toDateString())
+
+        const items=[]
+        Object.keys(groups).forEach((date)=>{
+            items.push(<li className='text-center mb-1 padded' >{date}</li>)
+            const msgs=groups[date].map(msg=>(
+            <MessageItems key={msg.id} message={msg} 
+            handleAdmin={handleAdmin} handleLike={handleLike} 
+            handleDelete={handleDelete} />
+            ))
+            items.push(...msgs)
+        })
+        return items
+    }
+
     return (
         <ul className='msg-list custom-scroll'>
             {chatIsEmpty && <li>No messages yet</li>}
-            {canShowMessages && messages.map(msg=><MessageItems key={msg.id} message={msg} handleAdmin={handleAdmin} handleLike={handleLike} handleDelete={handleDelete} />)}
+            {canShowMessages && renderMessages() }
         </ul>
     )
 }
